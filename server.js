@@ -1,6 +1,31 @@
 var express = require('express');
 var app = express();
-var router = express.Router();
+
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + '/public/index.html');
+});
+
+app.post("/create-post", function (req, res) {
+  res.send("Hello World!");
+});
+
+app.listen(3000, function () {
+  console.log('yeeeeha!!');
+});
+
+
+
+
+
+
+
+
+
+
+
+// var express = require('express');
+// var app = express();
+// var router = express.Router();
 
 // app.get("/", function (req, res) {
 //   res.send("Hello World!");
@@ -15,10 +40,10 @@ var router = express.Router();
 //   res.send("Hello ra!");
 // });
 
-router.get("/", function (req, res, next) {
-  // res.render('index', {nombre: "raq"});
-  res.render('prueba', {title : 'express'});
-});
+// router.get("/", function (req, res, next) {
+//   // res.render('index', {nombre: "raq"});
+//   res.render('prueba', {title : 'express'});
+// });
 
 // app.get("/got", function (req, res) {
 //   res.send("Juego de tronos!!");
@@ -31,6 +56,9 @@ router.get("/", function (req, res, next) {
 
 // app.use(express.static("public"));
 
-app.listen(3000, function () {
-  console.log('yeeeeha!!');
-});
+// app.listen(3000, function () {
+//   console.log('yeeeeha!!');
+// });
+
+
+
