@@ -2,6 +2,7 @@
 var express = require('express');
 var app = express();
 var body_parser = require('body-parser');
+var fs = require('fs'); // sirve para escribir en un fichero almacenado en el disco duro de mi ordenador
 
 app.use(body_parser.urlencoded({extended:true}));
 
@@ -31,8 +32,32 @@ app.post("/directions", function (req, res) {
     response = 'el usuario no exixte';
     direction = '';
   } else {
+    fs.readFile(__dirname + '/data/posts.json', function (error, file) {    
+    var parsedFile = JSON.parse(file);
+    console.log('parsedFile',parsedFile);
+
+    if(parsedFile[result[0]].length === 0) {
+      console.log('esta vacio')
+    } else {
+      console.log('tiene algo')
+    }
+  });
+
     response = 'Bienvenido ' + result[0];
     direction = 'Debes ' + directions[result[0]][0];
+    var actualDirections = {
+
+
+    }
+    var array = [];
+    array.push(directions[result[0]][0]);
+
+    actualDirections[result[0]] = array;
+    console.log('actualDirections',actualDirections)
+    console.log('actualDirections[result[0]]',actualDirections[result[0]])
+
+
+    fs.writeFile(__dirname + '/data/posts.json', JSON.stringify(actualDirections), function (error) {   console.log(error)});
   }
 
   res.render('otro',{
@@ -40,6 +65,20 @@ app.post("/directions", function (req, res) {
     direction: direction,
   })
 });
+
+// fs.readFile(__dirname + '/data/posts.json', function (error, file) {    
+//   var parsedFile = JSON.parse(file);
+//   console.log(file.toString());
+//   console.log(parsedFile);
+// });
+
+// var adalaber = {
+//   name: 'María',
+//   age: 31,
+//   isMarried: false
+// };
+
+// fs.writeFile(__dirname + '/data/posts.json', JSON.stringify(adalaber), function (error) {   console.log(error)});
 
 app.listen(3000, function () {
   console.log('El servidor esta levantado en el puerto 3000');
